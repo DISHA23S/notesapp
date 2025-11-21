@@ -137,9 +137,11 @@ export default function NotesListScreen({ navigation }) {
       {/* Search */}
       <TextInput
         placeholder="Search by title or body"
+        placeholderTextColor="#666"
         value={query}
         onChangeText={setQuery}
-        style={styles.searchInput}
+        style={[styles.searchInput, { color: '#000' }]}
+        selectionColor="#007AFF"
       />
 
       {/* Sort Info */}

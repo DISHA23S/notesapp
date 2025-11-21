@@ -39,9 +39,11 @@ export default function SignupScreen() {
         <TextInput
           value={username}
           onChangeText={setUsername}
-          style={styles.input}
+          style={[styles.input, styles.inputText]}
           autoCapitalize="none"
           placeholder="Choose a username"
+          placeholderTextColor="#666"
+          selectionColor="#007AFF"
         />
         
         <Text style={styles.label}>PIN (4+ digits)</Text>
@@ -51,8 +53,10 @@ export default function SignupScreen() {
           secureTextEntry
           keyboardType="number-pad"
           maxLength={6}
-          style={styles.input}
+          style={[styles.input, styles.inputText]}
           placeholder="Create PIN"
+          placeholderTextColor="#666"
+          selectionColor="#007AFF"
         />
         
         <Text style={styles.label}>Confirm PIN</Text>
@@ -62,8 +66,10 @@ export default function SignupScreen() {
           secureTextEntry
           keyboardType="number-pad"
           maxLength={6}
-          style={styles.input}
+          style={[styles.input, styles.inputText]}
           placeholder="Re-enter PIN"
+          placeholderTextColor="#666"
+          selectionColor="#007AFF"
         />
         
         {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -93,6 +99,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
     backgroundColor: '#f9f9f9'
+  },
+  inputText: {
+    color: '#000'
   },
   hint: { fontSize: 12, color: '#666', marginTop: 8, marginBottom: 20 },
   error: { fontSize: 12, color: 'red', marginTop: 8 },

@@ -111,6 +111,8 @@ export default function NoteEditorScreen({ route, navigation }) {
         onChangeText={setTitle}
         style={styles.input}
         placeholder="Meeting recap, shopping list..."
+        placeholderTextColor="#666"
+        selectionColor="#007AFF"
       />
       
       <Text style={styles.label}>Body</Text>
@@ -122,6 +124,8 @@ export default function NoteEditorScreen({ route, navigation }) {
         numberOfLines={8}
         textAlignVertical="top"
         placeholder="Capture all the details here"
+        placeholderTextColor="#666"
+        selectionColor="#007AFF"
       />
       
       <Text style={styles.hint}>Notes are saved offline per account.</Text>
@@ -223,6 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#f9f9f9',
     marginBottom: 12,
+    color: '#000',
   },
   bodyInput: {
     borderWidth: 1,
@@ -233,6 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f9f9f9',
     minHeight: 180,
     marginBottom: 8,
+    color: '#000',
   },
   hint: {
     fontSize: 12,

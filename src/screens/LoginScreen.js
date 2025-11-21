@@ -38,9 +38,11 @@ export default function LoginScreen() {
         <TextInput
           value={username}
           onChangeText={setUsername}
-          style={styles.input}
+          style={[styles.input, styles.inputText]}
           autoCapitalize="none"
           placeholder="Enter username"
+          placeholderTextColor="#666"
+          selectionColor="#007AFF"
         />
         
         <Text style={styles.label}>PIN</Text>
@@ -50,8 +52,10 @@ export default function LoginScreen() {
           secureTextEntry
           keyboardType="number-pad"
           maxLength={6}
-          style={styles.input}
+          style={[styles.input, styles.inputText]}
           placeholder="Enter PIN"
+          placeholderTextColor="#666"
+          selectionColor="#007AFF"
         />
         
         {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -81,6 +85,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     fontSize: 16,
     backgroundColor: '#f9f9f9'
+  },
+  // ensure text color is explicit so bullets/placeholders are visible in release builds
+  inputText: {
+    color: '#000'
   },
   hint: { fontSize: 12, color: '#666', marginTop: 8, marginBottom: 20 },
   error: { fontSize: 12, color: 'red', marginTop: 8 },
