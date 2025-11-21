@@ -1,7 +1,7 @@
 // src/screens/NotesListScreen.js
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
-import { Alert, FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import NoteCard from '../components/NoteCard';
 import { AuthContext } from '../navigation/AuthContext';
 import { deleteNote, getNotes, getUsers } from '../storage/localStore';
@@ -19,6 +19,9 @@ export default function NotesListScreen({ navigation }) {
   const [switchPin, setSwitchPin] = useState('');
   const [switchError, setSwitchError] = useState('');
   const [switchLoading, setSwitchLoading] = useState(false);
+  const [viewerVisible, setViewerVisible] = useState(false);
+  const [viewerUris, setViewerUris] = useState([]);
+  const [viewerIndex, setViewerIndex] = useState(0);
 
   const loadNotes = useCallback(async () => {
     setRefreshing(true);
@@ -158,6 +161,14 @@ export default function NotesListScreen({ navigation }) {
             note={item} 
             onPress={() => navigation.navigate('Editor', { note: item })} 
             onDelete={() => confirmDelete(item)} 
+            onView={() => {
+              const uris = item.imageUris && item.imageUris.length ? item.imageUris : (item.imageUri ? [item.imageUri] : []);
+              if (uris.length) {
+                setViewerUris(uris);
+                setViewerIndex(0);
+                setViewerVisible(true);
+              }
+            }}
           />
         )}
         ListEmptyComponent={
@@ -257,6 +268,29 @@ export default function NotesListScreen({ navigation }) {
                     <Text style={[styles.menuItemText, { color: '#007AFF', textAlign: 'center' }]}>{switchLoading ? 'Checking...' : 'Confirm'}</Text>
                   </TouchableOpacity>
                 </View>
+              </View>
+            ) : null}
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* Image Viewer Modal */}
+      <Modal visible={viewerVisible} transparent animationType="fade" onRequestClose={() => setViewerVisible(false)}>
+        <TouchableOpacity style={styles.viewerOverlay} activeOpacity={1} onPress={() => setViewerVisible(false)}>
+          <View style={styles.viewerContainer}>
+            {viewerUris && viewerUris.length ? (
+              <View style={styles.viewerInner}>
+                <Image source={{ uri: viewerUris[viewerIndex] }} style={styles.viewerImage} resizeMode="contain" />
+              </View>
+            ) : null}
+            {viewerUris && viewerUris.length > 1 ? (
+              <View style={styles.viewerControls} pointerEvents="box-none">
+                <TouchableOpacity onPress={() => setViewerIndex(i => Math.max(0, i - 1))} style={styles.viewerNavBtn}>
+                  <Text style={styles.viewerNavText}>{'<'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setViewerIndex(i => Math.min(viewerUris.length - 1, i + 1))} style={styles.viewerNavBtn}>
+                  <Text style={styles.viewerNavText}>{'>'}</Text>
+                </TouchableOpacity>
               </View>
             ) : null}
           </View>
@@ -387,5 +421,47 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#eee',
     marginVertical: 8,
+  },
+  viewerOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewerContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewerInner: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewerImage: {
+    width: '100%',
+    height: '100%',
+  },
+  viewerControls: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    top: '50%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  viewerNavBtn: {
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 6,
+  },
+  viewerNavText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '700',
   },
 });
