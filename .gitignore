@@ -41,3 +41,43 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Expo / EAS and build artifacts
+.expo-shared/
+eas.json
+
+# Local env and secrets
+.env
+.env.*
+.env.local
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Metro / bundler cache
+.expo/cache/
+.expo/web/
+
+# Gradle / Android build
+.gradle/
+android/.gradle/
+android/.cxx/
+android/app/build/
+
+# Xcode / iOS build
+xcuserdata/
+DerivedData/
+build/
+
+# Misc
+*.swp
+*.swo
+*.sln
+*.user

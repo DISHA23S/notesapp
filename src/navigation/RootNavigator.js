@@ -36,6 +36,7 @@ export default function RootNavigator() {
                 headerBackTitle: 'Back',
               })}
             />
+            <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
           </>
         )}
       </Stack.Navigator>

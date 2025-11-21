@@ -24,7 +24,7 @@ export default function SignupScreen() {
     try {
       await addUser(trimmedUsername, pin);
       setError('');
-      Alert.alert('User created', 'You can now login', [{ text: 'OK', onPress: () => nav.navigate('Login') }]);
+      Alert.alert('User created', 'Account created successfully. You can now switch to this account.', [{ text: 'OK', onPress: () => nav.goBack() }]);
     } catch (e) {
       setError(e.message);
     }
@@ -73,8 +73,8 @@ export default function SignupScreen() {
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
         
-        <TouchableOpacity onPress={() => nav.navigate('Login')}>
-          <Text style={styles.link}>Already have an account? Login</Text>
+        <TouchableOpacity onPress={() => nav.goBack()}>
+          <Text style={styles.link}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

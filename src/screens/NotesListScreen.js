@@ -248,6 +248,17 @@ export default function NotesListScreen({ navigation }) {
               <Text style={styles.emptySubtext}>No other users found.</Text>
             )}
 
+            <View style={styles.menuDivider} />
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                setSwitchVisible(false);
+                navigation.navigate('Signup');
+              }}
+            >
+              <Text style={[styles.menuItemText, { color: '#007AFF', textAlign: 'center' }]}>Create New Account</Text>
+            </TouchableOpacity>
+
             {selectedUser ? (
               <View style={{ padding: 8 }}>
                 <Text style={{ marginBottom: 6 }}>Enter PIN for {selectedUser}</Text>
